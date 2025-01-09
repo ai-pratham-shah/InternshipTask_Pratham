@@ -1,20 +1,21 @@
 def decorator1(pattern):
     def wrapper():
-        pattern()
-        print("Done")
+        result = pattern()
+        return result
     return wrapper
 def decorator2(pattern):
-    def wrapper():
-        pattern()
-        print("Done")
+    def wrapper(*args):
+        pattern(*args)
+        print(args[0])
+        pattern(*args)
     return wrapper
 @decorator1
+def static_string():
+    stringg = "aktiv"
+    return stringg
 @decorator2
-def pattern():
+def pattern(stringg):
     print("* * * * *")
     print("% % % % %")
-    s="Aktiv"
-    print(s)
-    print("% % % % %")
-    print("* * * * *")
-pattern()
+stringg = user_input()
+pattern(stringg)
