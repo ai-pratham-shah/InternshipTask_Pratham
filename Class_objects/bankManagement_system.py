@@ -92,7 +92,7 @@ class CurrentAccount(BankAccount):
                 print("Withdrawal exceeds overdraft limit.")
         else:
             print("Account number not found.")
-# Menu-driven interaction
+
 def main():
     savings = SavingsAccount()   
     current = CurrentAccount()   
