@@ -19,3 +19,8 @@ def pattern(stringg):
     print("% % % % %")
 stringg = user_input()
 pattern(stringg)
+start_time = time.time()
+print("Start time:", start_time)
+end_time = time.time()
+print("End time:", end_time)
+print("Execution time:", end_time-start_time)
