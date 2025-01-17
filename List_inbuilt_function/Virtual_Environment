@@ -1,0 +1,20 @@
+----------Create virtual Environment in Python----------
+
+-> $ pip install virtualenv
+-> $ virtualenv --version [Installation testing]
+
+----------Create Python Environment----------
+
+-> $ virtualenv my_env
+
+----------Activating a Virtual Environment in Python----------
+
+-> my_env/bin/activate
+
+----------Deactivate Python Virtual Environment----------
+
+-> $ deactivate
+
+-> sudo apt install virtualenvwrapper
+-> source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+-> mkvirtualenv -p /usr/bin/python3.10 my_env

@@ -7,3 +7,5 @@ print("Left aligned: ",sentence.ljust(50,"@"))
 
 print("Right aligned: ", sentence.rjust(50,"#"))
 #For right aligned use "rjust".
+
+
