@@ -11,17 +11,12 @@ def decorator2(pattern):
     return wrapper
 @decorator1
 def static_string():
-    stringg = "aktiv"
-    return stringg
+    string = "aktiv"
+    return string
 @decorator2
-def pattern(stringg):
+def pattern(string):
     print("* * * * *")
     print("% % % % %")
-stringg = static_string()
-pattern(stringg)
-import time
-start_time = time.time()
-print("Start time:", start_time)
-end_time = time.time()
-print("End time:", end_time)
-print("Execution time:", end_time-start_time)
+string = static_string()
+pattern(string)
+

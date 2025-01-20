@@ -121,3 +121,6 @@ conn.close()
 """ \copy (SELECT * FROM employees) to '/home/odoo/Documents/demo.csv' WITH DELIMITER ',' CSV header; """
 
 
+
+
+
