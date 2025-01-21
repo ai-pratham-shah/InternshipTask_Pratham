@@ -129,8 +129,8 @@ print("Example of reversed function:", ralph)
 for x in ralph:
   print("Example of Reversed function:", x) # The reversed() function returns a reversed iterator object.
 
-xrr = round(5.76543, 2)
-print("Example of round function:", x) # he round() function returns a floating point number that is a rounded version of the specified number, with the specified number of decimals.The default number of decimals is 0, meaning that the function will return the nearest integer.
+xrr = round(5.76543)
+print("Example of round function:", xrr) # he round() function returns a floating point number that is a rounded version of the specified number, with the specified number of decimals.The default number of decimals is 0, meaning that the function will return the nearest integer.
 
 xset = set(('apple', 'banana', 'cherry'))
 print("Example of set function:", xset) # The set() function creates a set object.The items in a set list are unordered, so it will appear in random order.

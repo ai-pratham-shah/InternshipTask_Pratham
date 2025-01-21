@@ -33,14 +33,11 @@ print(text.split())  # Output: ["hello", "world", "Python"]
 words = ["hello", "world", "Python"] #Joins elements of a list or iterable into a single string using a specified separator.
 print(" ".join(words))  # Output: "hello world Python"
 
-
 text = "hello world" #Returns the index of the first occurrence of a substring, or -1 if not found.
 print(text.find("world"))  # Output: 6
 
-
 text = "hello world" #Similar to find() but raises a ValueError if the substring is not found.
 print(text.index("world"))  # Output: 6
-
 
 text = "hello world" #Checks if the string starts or ends with a specified substring.
 print(text.startswith("hello"))  # Output: True
