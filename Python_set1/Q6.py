@@ -156,34 +156,41 @@ class Storemanagement_system:
         
     def run(self):
         """Main menu for user interaction."""
-        while True:
-            print("\n Store Management System")
-            print("1. Create Shelf")
-            print("2. Add Product, Set Category & Cost Prices")
-            print("3. Update Sale Price for a Product")
-            print("4. Update sale prices for all products in a shelf by a given percentage.")
-            print("5. Set or update the category of a product.")
-            print("6. Reset cost price with 0 for a given shelf, product, and month.")
-            print("0. Exit")
-            choice = input("Enter your choice: ").strip()
+        print("\n Store Management System")
+        print("1. Create Shelf")
+        print("2. Add Product, Set Category & Cost Prices")
+        print("3. Update Sale Price for a Product")
+        print("4. Update sale prices for all products in a shelf by a given percentage.")
+        print("5. Set or update the category of a product.")
+        print("6. Reset cost price with 0 for a given shelf, product, and month.")
+        print("0. Exit")
+        
+        choice = input("Enter your choice: ").strip()
 
-            if choice == "1":
-                self.create_shelf()
-            elif choice == "2":
-                self.add_product()
-            elif choice == "3":
-                self.update_sale_price()
-            elif choice == "4":
-                self.update_sale_price_for_shelf()
-            elif choice == "5":
-                self.set_category()
-            elif choice == "6":
-                self.reset_cost_price()
-            elif choice == "0":
-                print("Exiting Store Management System.")
-                break
-            else:
-                print("Invalid choice. Please try again.")
+        if choice == "1":
+            self.create_shelf()
+        elif choice == "2":
+            self.add_product()
+        elif choice == "3":
+            self.update_sale_price()
+        elif choice == "4":
+            self.update_sale_price_for_shelf()
+        elif choice == "5":
+            self.set_category()
+        elif choice == "6":
+            self.reset_cost_price()
+        elif choice == "0":
+            print("Exiting Store Management System.")
+            return  # End recursion when exiting
+        else:
+            print("Invalid choice. Please try again.")
+        
+        # Recursive call to display the menu again
+        #self.run()
+
+# Instantiate and run the system
+store = Storemanagement_system()
+store.run()
 
 
 store = Storemanagement_system()

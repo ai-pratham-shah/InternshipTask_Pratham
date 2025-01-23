@@ -41,19 +41,6 @@ print(filterd_numbers)
 #	STEP 3: RETURN RESULT AS LIST.
 # END
 
-def extract_number(numbers):
-    result = []
-    for num in numbers:
-        if 1000 <= num <= 9999:
-            first_digit = (num // 1000) % 10
-            last_digit = num % 10
-                
-            if first_digit % 2 != 0 and last_digit % 2 == 0:
-                if num % 3 == 0 or num % 7 == 0:
-                    result.append(num)
-    return result
-numbers = [9989, 7822, 9534]
-filterd_numbers = extract_number(numbers)
-print(filterd_numbers)       
+  
                      
                      

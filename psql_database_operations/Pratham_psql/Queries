@@ -1,0 +1,41 @@
+######### NEW TABLE #########
+
+employees table:
+
+######### CREATE TABLE QUERY #########
+
+CREATE TABLE employees(employee_id SERIAL PRIMARY KEY, name VARCHAR(100), department VARCHAR(100));
+
+######### INSERT INTO TABLE QUERY #########
+
+INSERT INTO employees(employee_id,name, department) values(101, 'Alice', 'ERP'),(102, 'Bob', 'SALES'),(103, 'Charlie', 'PHP');
+
+######### SELECT * INTO TABLE QUERY #########
+
+SELECT * FROM employees;
+
+
+######### NEW TABLE #########
+
+project table:
+
+######### CREATE TABLE QUERY #########
+
+CREATE TABLE project (project_id SERIAL PRIMARY KEY, project_name VARCHAR(100) NOT NULL, employee_id INT, FOREIGN KEY (employee_id) REFERENCES employees(employee_id) );
+
+######### INSERT INTO TABLE QUERY #########
+
+INSERT INTO project (project_id, project_name) VALUES (101, 'Web redesign');
+INSERT INTO project (project_id, project_name) VALUES (102, 'Ad campaign');
+INSERT INTO project (project_id, project_name) VALUES (103, 'Recruitment drive');
+
+######### SELECT * INTO TABLE QUERY #########
+
+SELECT * FROM project;
+
+######### JOIN QUERY #########
+
+SELECT e.name, p.project_name
+FROM employees e
+JOIN project p ON e.employee_id = p.project_id; 
+
