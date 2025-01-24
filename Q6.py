@@ -125,15 +125,18 @@ class Storemanagement_system:
         product_name = input("Enter the product name: ").strip()
         price_type = input("Do you want 'max' or 'min' price? ").strip().lower()
 
-       if price_type not in ["max", "min"]:
+        # Check if the user entered a valid price type
+        if price_type not in ["max", "min"]:
             print(" Invalid choice. Please enter 'max' or 'min'.")
             return
 
+        # Define the function based on the user's choice
         price_func = max if price_type == "max" else min
 
         min_max_price = None
         shelf_with_price = None
 
+        # Iterate through shelves and products
         for shelf, products in self.store_data.items():
             if product_name in products:
                 for month, prices in products[product_name]["Cost Price"].items():
@@ -219,4 +222,3 @@ class Storemanagement_system:
 # Instantiate and run the system
 store = Storemanagement_system()
 store.run()
-

@@ -1,5 +1,4 @@
 records = {}
-
 def add_data():
     try:
         # Adding countries
@@ -9,15 +8,24 @@ def add_data():
                 print("Country name cannot be blank. Please enter a valid country name.")
                 continue
 
+
             if country not in records:
                 records[country] = {}
                 print(f"Country {country} added.")
             else:
                 print(f"Country {country} already exists.")
-
-            choice = input("Do you want to enter another country? (Y/N): ").strip().lower()
+           
+            while True:
+                choice = input("Do you want to enter another country? (Y/N): ").strip().lower()
+                if choice == 'n':
+                    break
+                elif choice == 'y':
+                    break
+                else:
+                    print("Invalid input. Please enter 'Y' for Yes or 'N' for No.")
             if choice == 'n':
                 break
+
 
         # Adding states
         while True:
@@ -26,7 +34,7 @@ def add_data():
                 print("State name cannot be blank. Please enter a valid state name.")
                 continue
 
-            # Associating the state with an existing country
+
             while True:
                 country = input(f"Enter the country to associate with state {state}: ").strip().title()
                 if country in records:
@@ -35,10 +43,18 @@ def add_data():
                     break
                 else:
                     print(f"Country {country} does not exist. Please enter a valid country.")
-
-            choice = input("Do you want to enter another state? (Y/N): ").strip().lower()
+           
+            while True:
+                choice = input("Do you want to enter another state? (Y/N): ").strip().lower()
+                if choice == 'n':
+                    break
+                elif choice == 'y':
+                    break
+                else:
+                    print("Invalid input. Please enter 'Y' for Yes or 'N' for No.")
             if choice == 'n':
                 break
+
 
         # Adding cities
         while True:
@@ -47,7 +63,7 @@ def add_data():
                 print("City name cannot be blank. Please enter a valid city name.")
                 continue
 
-            # Associating the city with an existing state and country
+
             while True:
                 country = input(f"Enter the country to associate with city {city}: ").strip().title()
                 if country in records:
@@ -63,14 +79,22 @@ def add_data():
                         print(f"State {state} does not exist under Country {country}. Please enter a valid state.")
                 else:
                     print(f"Country {country} does not exist. Please enter a valid country.")
-
-            choice = input("Do you want to enter another city? (Y/N): ").strip().lower()
-            if choice == 'n':
-                print("Returning to the main menu.")
-                break
-
+           
+            while True:
+                choice = input("Do you want to enter another city? (Y/N): ").strip().lower()
+                if choice == 'n':
+                    print("Returning to the main menu.")
+                    return
+                elif choice == 'y':
+                    break
+                else:
+                    print("Invalid input. Please enter 'Y' for Yes or 'N' for No.")
     except Exception as e:
         print(f"Error occurred while adding data: {e}")
+
+
+# The rest of your functions remain unchanged
+
 
 def show_data():
     ''' This Function will print the all records. '''
@@ -86,14 +110,16 @@ def show_data():
     except Exception as e:
         print(f"Error occurred while showing records: {e}")
 
+
 def update_data():
     ''' This Function will update the Country , state, city according to user input. '''
     try:
         print("What would you like to update(Country, State, City)?")
         choice = input("Enter your choice (Country, State, City): ").strip().title()
 
+
         if choice == "Country":
-            
+           
             old_country = input("Enter the current country name: ").strip().title()
             if old_country in records:
                 new_country = input(f"Enter the new name for the country {old_country}: ").strip().title()
@@ -103,8 +129,10 @@ def update_data():
                 print(f"Country {old_country} not found.")
 
 
+
+
         elif choice == "State":
-            
+           
             country = input("Enter the country for the state: ").strip().title()
             if country in records:
                 old_state = input("Enter the current state name: ").strip().title()
@@ -118,8 +146,10 @@ def update_data():
                 print(f"Country {country} not found.")
 
 
+
+
         elif choice == "City":
-            
+           
             country = input("Enter the country for the city: ").strip().title()
             if country in records:
                 state = input("Enter the state for the city: ").strip().title()
@@ -138,19 +168,24 @@ def update_data():
                 print(f"Country {country} not found.")
 
 
+
+
         else:
             print("Invalid choice. Please select 1, 2, or 3.")
 
 
+
+
     except Exception as e:
         print(f"Error occurred while updating record: {e}")
+
 
 def delete_data():
     ''' This Function will delete data from records like country, state, city according to user input. '''
     try:
         print("What would you like to delete? (Country, State, City)")
         choice = input("Enter your choice (Country, State, City): ").strip().title()
-        
+       
         if choice == "Country":
             country = input("Enter the country to delete: ").strip().title()
             if country in records:
@@ -158,7 +193,7 @@ def delete_data():
                 print(f"All records for Country = {country} deleted successfully.")
             else:
                 print(f"Country {country} not found.")
-        
+       
         elif choice == "State":
             country = input("Enter the country for the state: ").strip().title()
             if country in records:
@@ -170,7 +205,7 @@ def delete_data():
                     print(f"State {state} not found under Country = {country}.")
             else:
                 print(f"Country {country} not found.")
-        
+       
         elif choice == "City":
             country = input("Enter the country for the city: ").strip().title()
             if country in records:
@@ -186,10 +221,10 @@ def delete_data():
                     print(f"State {state} not found under Country = {country}.")
             else:
                 print(f"Country {country} not found.")
-        
+       
         else:
             print("Invalid choice. Please choose either Country, State, or City.")
-    
+   
     except Exception as e:
         print(f"Error occurred while deleting record: {e}")
 def main_menu():
@@ -201,7 +236,9 @@ def main_menu():
         print("4. Delete Record")
         print("5. Exit")
 
+
         choice = input("Enter your choice: ").strip()
+
 
         if choice == "1":
             add_data()

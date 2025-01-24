@@ -53,6 +53,36 @@ sda = sales_data_analysis
 sda.add_data(Product_id, product_name, sale_amount, sale_date)
 sda.get_data(Product_id, product_name, sale_amount, sale_date) '''
 
+'''Initialize an empty list to store product data
+sales_data = []
+
+ Loop to allow user to enter data
+while True:
+    
+    product_id = int(input("Enter product ID: "))
+    product_name = input("Enter product name: ")
+    sale_amount = float(input("Enter sale amount: "))
+    sale_date = input("Enter sale date (YYYY-MM-DD): ")
+    
+     Create a dictionary for the product and append it to the list
+    product = {
+        "product_id": product_id,
+        "product_name": product_name,
+        "sale_amount": sale_amount,
+        "sale_date": sale_date
+    }
+    
+    sales_data.append(product)
+    continue_input = input("Do you want to enter another product? (yes/no): ")
+    if continue_input.lower() != "yes":
+        break
+
+ Print the collected data
+print("\nSales Data Entered:")
+for product in sales_data:
+    print(product)'''
+
+
 class sales_data_analysis: 
     def __init__(self):
         self.sales_data = []

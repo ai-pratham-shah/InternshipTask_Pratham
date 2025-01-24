@@ -1,0 +1,4 @@
+name,email,product_name,quantity
+Alice,alice@email.com,Laptop,1
+Bob,bob@email.com,Mobile,3
+Charlie,charlie@email.com,--,0

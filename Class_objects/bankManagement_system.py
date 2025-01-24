@@ -12,8 +12,6 @@ Example Usage:
 
 Demonstrates how to create and interact with SavingsAccount and CurrentAccount objects. '''
 
-
-
 class BankAccount:
     def __init__(self):
         self.accounts = {}
@@ -26,76 +24,110 @@ class BankAccount:
             self.accounts[account_number] = {"holder_name": holder_name, "balance": 0}
             print(f"Account {account_number} for {holder_name} created successfully.")
 
+
     def deposit(self, account_number, amount):
         """Deposit money into an account."""
-        if account_number in self.accounts:
-            self.accounts[account_number]["balance"] += amount
-            print(f"Deposited {amount} to account {account_number}.")
-        else:
-            print("Account number not found.")
+        try:
+            if account_number in self.accounts:
+                self.accounts[account_number]["balance"] += amount
+                print(f"Deposited {amount} to account {account_number}.")
+            else:
+                print("Account number not found.")
+        except Exception as e:
+            print(f"Error during deposit: {e}")
+
 
     def withdraw(self, account_number, amount):
-        """Withdraw money from an account."""
-        if account_number in self.accounts:
-            if self.accounts[account_number]["balance"] >= amount:
-                self.accounts[account_number]["balance"] -= amount
-                print(f"Withdrawn {amount} from account {account_number}.")
+        """Withdraw money from an account but prevent negative balance."""
+        try:
+            if account_number in self.accounts:
+                if self.accounts[account_number]["balance"] >= amount:
+                    self.accounts[account_number]["balance"] -= amount
+                    print(f"Withdrawn {amount} from account {account_number}.")
+                else:
+                    print(f"Insufficient balance! Your current balance is {self.accounts[account_number]['balance']}. Withdrawal of {amount} is not possible.")
             else:
-                print("Insufficient balance.")
-        else:
-            print("Account number not found.")
+                print("Account number not found.")
+        except Exception as e:
+            print(f"Error during withdrawal: {e}")
+
 
     def available_balance(self, account_number):
         """Display the current balance of a specified account."""
-        if account_number in self.accounts:
-            balance = self.accounts[account_number]["balance"]
-            holder_name = self.accounts[account_number]["holder_name"]
-            print(f"Account Holder: {holder_name}, Balance: {balance}")
-        else:
-            print("Account number not found.")
+        try:
+            if account_number in self.accounts:
+                balance = self.accounts[account_number]["balance"]
+                holder_name = self.accounts[account_number]["holder_name"]
+                print(f"Account Holder: {holder_name}, Balance: {balance}")
+            else:
+                print("Account number not found.")
+        except Exception as e:
+            print(f"Error fetching balance: {e}")
+
+
 class SavingsAccount(BankAccount):
     def __init__(self):
         super().__init__()
-        self.interest_rate = 0.05  # Example interest rate: 5%
+        self.interest_rate = 0.05
+
 
     def calculate_interest(self, account_number):
         """Calculate interest for a given account."""
-        if account_number in self.accounts:
-            balance = self.accounts[account_number]["balance"]
-            interest = balance * self.interest_rate
-            print(f"Interest for account {account_number}: {interest}")
-            return interest
-        else:
-            print("Account number not found.")
+        try:
+            if account_number in self.accounts:
+                balance = self.accounts[account_number]["balance"]
+                interest = balance * self.interest_rate
+                print(f"Interest for account {account_number}: {interest}")
+                return interest
+            else:
+                print("Account number not found.")
+                return 0
+        except Exception as e:
+            print(f"Error calculating interest: {e}")
             return 0
+
 
     def apply_interest(self, account_number):
         """Apply interest to the balance of the given account."""
-        interest = self.calculate_interest(account_number)
-        self.accounts[account_number]["balance"] += interest
-        print(f"Interest applied to account {account_number}. New balance: {self.accounts[account_number]['balance']}")
+        try:
+            if account_number in self.accounts:
+                interest = self.calculate_interest(account_number)
+                self.accounts[account_number]["balance"] += interest
+                print(f"Interest applied to account {account_number}. New balance: {self.accounts[account_number]['balance']}")
+            else:
+                print("Account number not found.")
+        except Exception as e:
+            print(f"Error applying interest: {e}")
 
 
 class CurrentAccount(BankAccount):
     def __init__(self):
         super().__init__()
-        self.overdraft_limit = 1000 
+        self.overdraft_limit = 1000
+
 
     def withdraw(self, account_number, amount):
         """Withdraw money, allowing overdraft within the limit."""
-        if account_number in self.accounts:
-            balance = self.accounts[account_number]["balance"]
-            if balance + self.overdraft_limit >= amount:
-                self.accounts[account_number]["balance"] -= amount
-                print(f"Withdrawn {amount} from account {account_number}.")
+        try:
+            if account_number in self.accounts:
+                balance = self.accounts[account_number]["balance"]
+                if balance + self.overdraft_limit >= amount:
+                    self.accounts[account_number]["balance"] -= amount
+                    print(f"Withdrawn {amount} from account {account_number}.")
+                else:
+                    print("Withdrawal exceeds overdraft limit.")
             else:
-                print("Withdrawal exceeds overdraft limit.")
-        else:
-            print("Account number not found.")
+                print("Account number not found.")
+        except Exception as e:
+            print(f"Error during withdrawal: {e}")
+
+
+
 
 def main():
-    savings = SavingsAccount()   
-    current = CurrentAccount()   
+    savings = SavingsAccount()  
+    current = CurrentAccount()  
+
 
     while True:
         print("\n!!!!!! Welcome to the Bank !!!!!!")
@@ -109,68 +141,83 @@ def main():
         print("8. Withdraw with Overdraft (Current Account Only)")
         print("9. Exit")
 
+
         choice = input("Enter your choice (1-9): ")
 
-        if choice == "1":
-            account_number = input("Enter Savings Account number: ")
-            holder_name = input("Enter Account Holder's Name: ")
-            savings.create_account(account_number, holder_name)  
 
-        elif choice == "2":
-            account_number = input("Enter Current Account number: ")
-            holder_name = input("Enter Account Holder's Name: ")
-            current.create_account(account_number, holder_name)  
+        try:
+            if choice == "1":
+                account_number = input("Enter Savings Account number: ")
+                holder_name = input("Enter Account Holder's Name: ")
+                savings.create_account(account_number, holder_name)  
 
-        elif choice == "3":
-            account_number = input("Enter Account Number for Deposit: ")
-            amount = float(input("Enter Amount to Deposit: "))
-            if account_number in savings.accounts:   
-                savings.deposit(account_number, amount)
-            elif account_number in current.accounts:  
-                current.deposit(account_number, amount)
+
+            elif choice == "2":
+                account_number = input("Enter Current Account number: ")
+                holder_name = input("Enter Account Holder's Name: ")
+                current.create_account(account_number, holder_name)  
+
+
+            elif choice == "3":
+                account_number = input("Enter Account Number for Deposit: ")
+                amount = float(input("Enter Amount to Deposit: "))
+                if account_number in savings.accounts:  
+                    savings.deposit(account_number, amount)
+                elif account_number in current.accounts:  
+                    current.deposit(account_number, amount)
+                else:
+                    print("Account number not found.")
+
+
+            elif choice == "4":
+                account_number = input("Enter Account Number for Withdrawal: ")
+                amount = float(input("Enter Amount to Withdraw: "))
+                if account_number in savings.accounts:  
+                    savings.withdraw(account_number, amount)
+                elif account_number in current.accounts:  
+                    current.withdraw(account_number, amount)
+                else:
+                    print("Account number not found.")
+           
+            elif choice == "5":
+                account_number = input("Enter Account Number to Check Balance: ")
+                if account_number in savings.accounts:  
+                    savings.available_balance(account_number)
+                elif account_number in current.accounts:  
+                    current.available_balance(account_number)
+                else:
+                    print("Account number not found.")
+           
+            elif choice == "6":
+                account_number = input("Enter Savings Account Number to Calculate Interest: ")
+                savings.calculate_interest(account_number)
+
+
+            elif choice == "7":
+                account_number = input("Enter Savings Account Number to Apply Interest: ")
+                savings.apply_interest(account_number)
+
+
+            elif choice == "8":
+                account_number = input("Enter Current Account Number for Withdrawal with Overdraft: ")
+                amount = float(input("Enter Amount to Withdraw (Including Overdraft): "))
+   
+                if account_number in current.accounts:  
+                    current.withdraw(account_number, amount)  
+                else:
+                    print("Account number not found in Current Accounts.")
+
+            elif choice == "9":
+                print("Thank you for using the bank system. Goodbye!")
+                break
+
+
             else:
-                print("Account number not found.")
+                print("Invalid choice. Please try again.")
 
-        elif choice == "4":
-            account_number = input("Enter Account Number for Withdrawal: ")
-            amount = float(input("Enter Amount to Withdraw: "))
-            if account_number in savings.accounts:   
-                savings.withdraw(account_number, amount)
-            elif account_number in current.accounts:  
-                current.withdraw(account_number, amount)
-            else:
-                print("Account number not found.")
-        
-        elif choice == "5":
-            account_number = input("Enter Account Number to Check Balance: ")
-            if account_number in savings.accounts:   
-                savings.available_balance(account_number)
-            elif account_number in current.accounts:  
-                current.available_balance(account_number)
-            else:
-                print("Account number not found.")
-        
-        elif choice == "6":
-            account_number = input("Enter Savings Account Number to Calculate Interest: ")
-            savings.calculate_interest(account_number)
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
-        elif choice == "7":
-            account_number = input("Enter Savings Account Number to Apply Interest: ")
-            savings.apply_interest(account_number)
-
-        elif choice == "8":
-            account_number = input("Enter Current Account Number for Withdrawal with Overdraft: ")
-            amount = float(input("Enter Amount to Withdraw (Including Overdraft): "))
-            if account_number in current.accounts:  
-                current.withdraw(account_number, amount)  
-            else:
-                print("Account number not found.")
-
-        elif choice == "9":
-            print("Thank you for using the bank system. Goodbye!")
-            break
-
-        else:
-            print("Invalid choice. Please try again.")
 
 main()
+
