@@ -181,8 +181,7 @@ for _ in range(n):
     mentor = input("Enter mentor's name (or 'None' if not applicable): ").strip()
     mentor = None if mentor.lower() == 'none' else mentor
     employees.append(Employee(name, designation, experience, manager, mentor))
-
-
+    
 menu()
 
 

@@ -137,15 +137,15 @@ class Storemanagement_system:
         for shelf, products in self.store_data.items():
             if product_name in products:
                 for month, prices in products[product_name]["Cost Price"].items():
-                    if prices:  # Check if there are prices available
+                    if prices:  
                         current_price = price_func(prices)
 
-                        # Set the min/max price and shelf
+                        
                         if min_max_price is None or (price_func([min_max_price, current_price]) == current_price):
                             min_max_price = current_price
                             shelf_with_price = shelf
 
-        # Output the result
+        
         if min_max_price is not None:
             print(f" {price_type.capitalize()} price of '{product_name}' is {min_max_price} in '{shelf_with_price}'.")
         else:
@@ -210,13 +210,13 @@ class Storemanagement_system:
             self.get_min_max_price()
         elif choice == "0":
             print("Exiting Store Management System.")
-            return # End recursion when exiting
+            return # End recursion
         else:
             print("Invalid choice. Please try again.")
 
         # Recursive call to display the menu again
         self.run()
-# Instantiate and run the system
+
 store = Storemanagement_system()
 store.run()
 
