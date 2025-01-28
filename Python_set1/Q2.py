@@ -7,6 +7,9 @@ def armstrong(n):
         return True
     else:
         return False
-n=int(input("Enter a number: "))
-print(armstrong(n))
-    
+
+try:
+    n=int(input("Enter a number: "))
+    print(armstrong(n))
+except ValueError:
+    print("Invalid input.")    

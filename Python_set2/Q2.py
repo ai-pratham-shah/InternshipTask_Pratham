@@ -11,8 +11,10 @@ def extract_string(input_list):
         return False
     return [s for s in input_list if is_valid_string(s)]
 
-input_list = ['Apple', 'Banana', 'cat', 'Alpha', 'Dog']
-result = extract_string(input_list)
+user_input = input("Enter a list of items (comma-separated): ")
+input_list = user_input.split(',')
+input_list = [item.strip() for item in input_list]
+result = extract_strings(input_list)
 print(result)
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------

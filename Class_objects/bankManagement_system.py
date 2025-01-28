@@ -16,8 +16,15 @@ class BankAccount:
     def __init__(self):
         self.accounts = {}
 
+
     def create_account(self, account_number, holder_name):
         """Create a new account with a holder's name."""
+        if len(account_number) != 14 or not account_number.isdigit():
+            print("Account number must be 14 digits long and numeric.")
+            return
+        if not holder_name.isalpha() or not holder_name.strip():
+            print("Account holder name should contain only alphabetic characters..")
+            return
         if account_number in self.accounts:
             print("Account number already exists.")
         else:
@@ -29,6 +36,9 @@ class BankAccount:
         """Deposit money into an account."""
         try:
             if account_number in self.accounts:
+                if not self.is_numeric(amount):
+                    print("Amount must be a numeric value.")
+                    return
                 self.accounts[account_number]["balance"] += amount
                 print(f"Deposited {amount} to account {account_number}.")
             else:
@@ -41,6 +51,9 @@ class BankAccount:
         """Withdraw money from an account but prevent negative balance."""
         try:
             if account_number in self.accounts:
+                if not self.is_numeric(amount):
+                    print("Amount must be a numeric value.")
+                    return
                 if self.accounts[account_number]["balance"] >= amount:
                     self.accounts[account_number]["balance"] -= amount
                     print(f"Withdrawn {amount} from account {account_number}.")
@@ -63,6 +76,11 @@ class BankAccount:
                 print("Account number not found.")
         except Exception as e:
             print(f"Error fetching balance: {e}")
+
+
+    def is_numeric(self, value):
+        """Check if the value is numeric."""
+        return isinstance(value, (int, float)) or (isinstance(value, str) and value.replace('.', '', 1).isdigit())
 
 
 class SavingsAccount(BankAccount):
@@ -110,6 +128,9 @@ class CurrentAccount(BankAccount):
         """Withdraw money, allowing overdraft within the limit."""
         try:
             if account_number in self.accounts:
+                if not self.is_numeric(amount):
+                    print("Amount must be a numeric value.")
+                    return
                 balance = self.accounts[account_number]["balance"]
                 if balance + self.overdraft_limit >= amount:
                     self.accounts[account_number]["balance"] -= amount
@@ -147,20 +168,24 @@ def main():
 
         try:
             if choice == "1":
-                account_number = input("Enter Savings Account number: ")
+                account_number = input("Enter Savings Account number (14 digits): ")
                 holder_name = input("Enter Account Holder's Name: ")
                 savings.create_account(account_number, holder_name)  
 
 
             elif choice == "2":
-                account_number = input("Enter Current Account number: ")
+                account_number = input("Enter Current Account number (14 digits): ")
                 holder_name = input("Enter Account Holder's Name: ")
                 current.create_account(account_number, holder_name)  
 
 
             elif choice == "3":
                 account_number = input("Enter Account Number for Deposit: ")
-                amount = float(input("Enter Amount to Deposit: "))
+                amount = input("Enter Amount to Deposit: ")
+                if not amount.isdigit():
+                    print("Amount must be a numeric value.")
+                    continue
+                amount = float(amount)
                 if account_number in savings.accounts:  
                     savings.deposit(account_number, amount)
                 elif account_number in current.accounts:  
@@ -171,7 +196,11 @@ def main():
 
             elif choice == "4":
                 account_number = input("Enter Account Number for Withdrawal: ")
-                amount = float(input("Enter Amount to Withdraw: "))
+                amount = input("Enter Amount to Withdraw: ")
+                if not amount.isdigit():
+                    print("Amount must be a numeric value.")
+                    continue
+                amount = float(amount)
                 if account_number in savings.accounts:  
                     savings.withdraw(account_number, amount)
                 elif account_number in current.accounts:  
@@ -200,12 +229,16 @@ def main():
 
             elif choice == "8":
                 account_number = input("Enter Current Account Number for Withdrawal with Overdraft: ")
-                amount = float(input("Enter Amount to Withdraw (Including Overdraft): "))
-   
+                amount = input("Enter Amount to Withdraw (Including Overdraft): ")
+                if not amount.isdigit():
+                    print("Amount must be a numeric value.")
+                    continue
+                amount = float(amount)
                 if account_number in current.accounts:  
                     current.withdraw(account_number, amount)  
                 else:
                     print("Account number not found in Current Accounts.")
+
 
             elif choice == "9":
                 print("Thank you for using the bank system. Goodbye!")
@@ -214,6 +247,7 @@ def main():
 
             else:
                 print("Invalid choice. Please try again.")
+
 
         except Exception as e:
             print(f"An error occurred: {e}")

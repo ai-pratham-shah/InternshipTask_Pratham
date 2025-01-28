@@ -12,10 +12,7 @@ def extract_numbers(numbers):
         if 1000 <= num <= 9999:
         
             second_digit = (num // 100) % 10 
-            print(second_digit) 
             last_digit = num % 10
-            print(last_digit)  
-            
             
             if second_digit % 2 != 0 and last_digit % 2 == 0:
             
@@ -24,11 +21,13 @@ def extract_numbers(numbers):
     
     return result
 
-numbers = [1005, 1111, 2218, 3200, 4008, 5555, 9876, 1230, 4560, 8789]
-filtered_numbers = extract_numbers(numbers)
-
-print("Filtered numbers:", filtered_numbers)
-
+user_input = input("Enter a list of 4 digit numbers (comma-separated): ")
+try:
+    numbers = [int(num.strip()) for num in user_input.split(',')]
+    filtered_numbers = extract_numbers(numbers)
+    print("Filtered numbers:", filtered_numbers)
+except ValueError:
+    print("Invalid Input.")
 
 
 

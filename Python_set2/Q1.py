@@ -12,9 +12,13 @@ def extract_repeated_words(sentence):
     repeated_words = [word for word in words if word_counts[word] > 1]
     return ' # '.join(repeated_words)
     
-sentence = "Pratham shah Pratham shah"
+
+sentence = input("Enter a proper sentence with repeated words : ")
 result = extract_repeated_words(sentence)
-print(result)
+if result:
+    print("Repeated words are :", result)
+else:
+    print("No repeated words found")
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 # FUNCTION extract_repeated_words(sentence):

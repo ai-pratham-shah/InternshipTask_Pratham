@@ -12,9 +12,8 @@ def extract_integers(numbers):
         if 1000 <= num <= 9999:
             
             first_digit = (num // 1000) % 10
-            print(first_digit)
+            
             last_digit = num % 10 
-            print(last_digit)
             
             if first_digit % 2 != 0 and last_digit % 2 == 0:
             
@@ -22,10 +21,13 @@ def extract_integers(numbers):
                     result.append(num)
     return result
     
-numbers = [9989, 7822, 9534, 3214]
-filterd_numbers = extract_integers(numbers) 
-print(filterd_numbers)              
-
+user_input = input("Enter a list of 4 digit numbers (comma-separated): ")
+try:    
+    numbers = [int(num.strip()) for num in user_input.split(',')]
+    filtered_numbers = extract_integers(numbers)
+    print("Filtered numbers:", filtered_numbers)
+except ValueError:
+    print("Invalid input")
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 
