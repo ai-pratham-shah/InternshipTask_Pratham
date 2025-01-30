@@ -125,7 +125,7 @@ class Storemanagement_system:
         product_name = input("Enter the product name: ").strip()
         price_type = input("Do you want 'max' or 'min' price? ").strip().lower()
 
-       if price_type not in ["max", "min"]:
+        if price_type not in ["max", "min"]:
             print(" Invalid choice. Please enter 'max' or 'min'.")
             return
 
