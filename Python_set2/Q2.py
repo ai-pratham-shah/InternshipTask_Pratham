@@ -5,17 +5,30 @@
 
 def extract_string(input_list):
     def is_valid_string(s):
+        # Check if the string starts with a capital letter and is not a vowel
         if s[0].isupper() and s[0] not in 'AEIOU':
+            # Check if the string is alphabetic
             if s.isalpha():
                 return True
         return False
+
     return [s for s in input_list if is_valid_string(s)]
 
 user_input = input("Enter a list of items (comma-separated): ")
-input_list = user_input.split(',')
-input_list = [item.strip() for item in input_list]
-result = extract_string(input_list)
-print(result)
+
+if not user_input.strip():
+    print("Input is not valid. Please enter a list of items.")
+else:
+    input_list = user_input.split(',')
+    input_list = [item.strip() for item in input_list]
+
+    result = extract_string(input_list)
+    
+    if result:
+        print("Valid strings found:", result)
+    else:
+        print("No valid strings found. Please check your input.")
+
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 
@@ -26,4 +39,6 @@ print(result)
 #	STEP 4: EACH WORD IN THE INPUT LIST CHECK ACCORIDING TO THE CONDITIONS THAT DEFINED IN THE is_valid_string(s) AND STORE IN THE LIST.
 # 	STEP 5: RETURN RESULT AS A LIST.
 # END
+
+
 

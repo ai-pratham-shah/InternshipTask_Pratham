@@ -4,35 +4,55 @@
 #For example: WORD1 # WORD2 # WORD3
 
 def extract_repeated_words(sentence):
-    
-    words = sentence.split()
+    words = sentence.lower().split()  # Convert sentence to lowercase
     word_counts = {}
+    repeated_words = set()
+
+
     for word in words:
         word_counts[word] = word_counts.get(word, 0) + 1
-    repeated_words = [word for word in words if word_counts[word] > 1]
-    return ' # '.join(repeated_words)
-    
+        if word_counts[word] == 2:  # Add to set when it appears the second time
+            repeated_words.add(word)
 
-sentence = input("Enter a proper sentence with repeated words : ")
+
+    return ' # '.join(repeated_words)
+
+sentence = input("Enter a proper sentence with repeated words: ")
 result = extract_repeated_words(sentence)
 if result:
-    print("Repeated words are :", result)
+    print("Repeated words are:", result)
 else:
-    print("No repeated words found")
+    print("No repeated words found.")
+
+
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
-# FUNCTION extract_repeated_words(sentence):
-# 	STEP 1: SPLITS THE STRING INTO LIST OF STRING AND STORE THEM INTO WORDS
-# 	STEP 2: INITIALIZING ONE EMPTY DICTIONARY CALLED WORD_COUNTS FOR COUNT OF REPEATED WORDS AS WORD WILL BE KEY AND THEIR COUNT WILL BE 
-#		VALUE
-#	STEP 3: FOR EACH WORD IN THE LIST OF WORDS
-#		A. IT CHECKS IF THE WORD ALREDY EXIST IN THE DICTIONARY THEN IT WILL INCREMENT BY 1
-#		B. IT CHECKS IF THE WORD NOT EXIST IN DICTIONARY THEN IT WILL ADD IT WITH BY 1
-#	STEP 4: INITIALIZING THE ONE EMPTY LIST(repeated_words) TO STORE THE WORDS THAT ARE REPEATED
-#		A.FOR EACH WORD IN THE DICTIONARY IF THE ANY WORD'S VALUE WILL BE GREATER THAN 1 THEN IT WILL BE ADDED TO THE  LIST(repeated_words)
-#       STEP 5: JOIN ALL THE WORDS IN THE LIST(repeated_words) WITH #
-#	STEP 6: RETURN result AS A STRING.
-# END
+
+# START PROGRAM
+
+# PROMPT THE USER TO ENTER A SENTENCE WITH REPEATED WORDS.
+# PROCESS INPUT SENTENCE
+
+# CONVERT THE SENTENCE TO LOWERCASE TO HANDLE CASE INSENSITIVITY.
+# SPLIT THE SENTENCE INTO WORDS USING SPACES AS DELIMITERS.
+# INITIALIZE DATA STRUCTURES
+
+# CREATE AN EMPTY DICTIONARY WORD_COUNTS TO STORE THE COUNT OF EACH WORD.
+# CREATE AN EMPTY SET REPEATED_WORDS TO STORE WORDS THAT APPEAR MORE THAN ONCE.
+# LOOP THROUGH EACH WORD IN THE SENTENCE
+
+# FOR EACH WORD IN THE LIST OF WORDS:
+# INCREMENT THE COUNT OF THE WORD IN WORD_COUNTS (USING GET TO HANDLE NEW WORDS).
+# IF THE WORD HAS BEEN ENCOUNTERED FOR THE SECOND TIME (COUNT EQUALS 2), ADD IT TO THE REPEATED_WORDS SET.
+# FORMAT AND RETURN THE RESULT
+
+# IF THERE ARE REPEATED WORDS, JOIN THEM WITH ' # ' TO CREATE A FORMATTED STRING AND RETURN IT.
+# IF NO REPEATED WORDS ARE FOUND, RETURN AN EMPTY STRING.
+# DISPLAY RESULT
+
+# IF REPEATED_WORDS IS NOT EMPTY, PRINT THE REPEATED WORDS.
+# IF NO REPEATED WORDS ARE FOUND, PRINT "NO REPEATED WORDS FOUND."
+# END PROGRAM
 
 
 

@@ -25,7 +25,10 @@ user_input = input("Enter a list of 4 digit numbers (comma-separated): ")
 try:    
     numbers = [int(num.strip()) for num in user_input.split(',')]
     filtered_numbers = extract_integers(numbers)
-    print("Filtered numbers:", filtered_numbers)
+    if filtered_numbers:
+        print("Valid filtered_numbers found:", filtered_numbers)
+    else:
+        print("No valid filtered numbers found.")
 except ValueError:
     print("Invalid input")
 
