@@ -2,221 +2,295 @@ class Storemanagement_system:
     def __init__(self):
         self.store_data = {}
 
+
     def create_shelf(self):
         """ Create a new shelf. """
-        shelf_name = input("Enter the new shelf name:").strip()
-        if shelf_name in self.store_data:
-            print(f"Shelf {shelf_name} already exists.")
-        else:
-            self.store_data[shelf_name] = {}
-            print(f"shelf {shelf_name} created successfully.")
-        print(self.store_data)
+        try:
+            shelf_name = input("Enter the new shelf name:").strip()
+            if shelf_name in self.store_data:
+                print(f"Shelf {shelf_name} already exists.")
+            else:
+                self.store_data[shelf_name] = {}
+                print(f"shelf {shelf_name} created successfully.")
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def add_product(self):
         """ Add a product, set category, and enter cost prices. """
-        shelf_name = input("Enter the shelf name:").strip()
-        if shelf_name not in self.store_data:
-            print("Shelf does not exist.Create the shelf first.")
-            return
-        product_name = input("Enter the product name:").strip()
-        if product_name not in self.store_data[shelf_name]:
-            self.store_data[shelf_name][product_name] = {"Category": None, "Cost Price": {}, "Sale Price": {}}
-            print(f"Product {product_name} added to {shelf_name}")
+        try:
+            shelf_name = input("Enter the shelf name:").strip()
+            if shelf_name not in self.store_data:
+                print("Shelf does not exist. Create the shelf first.")
+                return
+            product_name = input("Enter the product name:").strip()
+            if product_name not in self.store_data[shelf_name]:
+                self.store_data[shelf_name][product_name] = {"Category": None, "Cost Price": {}, "Sale Price": {}}
+                print(f"Product {product_name} added to {shelf_name}")
 
-        category = input(f"Enter category for '{product_name}': ").strip()
-        self.store_data[shelf_name][product_name]["Category"] = category
-        print(f" Category '{category}' set for {product_name}.")
 
-        while True:
-            month = input("Enter the month (or type 'done' to finish): ").strip().capitalize()
-            if month.lower() == "done":
-                break
+            category = input(f"Enter category for '{product_name}': ").strip()
+            self.store_data[shelf_name][product_name]["Category"] = category
+            print(f" Category '{category}' set for {product_name}.")
 
-            cost_prices = input(f"Enter cost prices for {month} (comma-separated): ").strip()
-            self.store_data[shelf_name][product_name]["Cost Price"][month] = [float(x) for x in cost_prices.split(",")]
 
-            print(f"Cost prices added for {product_name} in {month}.")
+            while True:
+                month = input("Enter the month (or type 'done' to finish): ").strip().capitalize()
+                if month.lower() == "done":
+                    break
 
-        print(self.store_data)
+
+                cost_prices = input(f"Enter cost prices for {month} (comma-separated): ").strip()
+                try:
+                    self.store_data[shelf_name][product_name]["Cost Price"][month] = [float(x) for x in cost_prices.split(",")]
+                    print(f"Cost prices added for {product_name} in {month}.")
+                except ValueError:
+                    print("Invalid cost prices entered. Please enter valid numbers.")
+
+
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def update_sale_price(self):
         """Update the sale price of a specific product for a given month."""
-        shelf_name = input("Enter the shelf name:").strip()
-        if shelf_name not in self.store_data:
-            print("Shelf does not exist.")
-            return
+        try:
+            shelf_name = input("Enter the shelf name:").strip()
+            if shelf_name not in self.store_data:
+                print("Shelf does not exist.")
+                return
 
-        product_name = input("Enter the product name:").strip()
-        if product_name not in self.store_data[shelf_name]:
-            print("Product does not exist.")
-            return
 
-        month = input("Enter the month: ").strip().capitalize()
-        if month not in self.store_data[shelf_name][product_name]["Cost Price"]:
-            print("No cost price data for this month.")
-            return
+            product_name = input("Enter the product name:").strip()
+            if product_name not in self.store_data[shelf_name]:
+                print("Product does not exist.")
+                return
 
-        percentage = float(input("Enter the percentage increase for sale price: ").strip())
-        cost_prices = self.store_data[shelf_name][product_name]["Cost Price"][month]
-        sale_prices = [round(cp * (1 + percentage / 100), 2) for cp in cost_prices]
-        self.store_data[shelf_name][product_name]["Sale Price"][month] = sale_prices
 
-        print(f"Sale prices updated for {product_name} in {month}.")
-        print(self.store_data)
+            month = input("Enter the month: ").strip().capitalize()
+            if month not in self.store_data[shelf_name][product_name]["Cost Price"]:
+                print("No cost price data for this month.")
+                return
+
+
+            try:
+                percentage = float(input("Enter the percentage increase for sale price: ").strip())
+            except ValueError:
+                print("Invalid percentage entered.")
+                return
+
+
+            cost_prices = self.store_data[shelf_name][product_name]["Cost Price"][month]
+            sale_prices = [round(cp * (1 + percentage / 100), 2) for cp in cost_prices]
+            self.store_data[shelf_name][product_name]["Sale Price"][month] = sale_prices
+
+
+            print(f"Sale prices updated for {product_name} in {month}.")
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def update_sale_price_for_shelf(self):
         """Update sale prices for all products in a shelf by a given percentage."""
-        shelf_name = input("Enter the shelf name: ").strip()
-        if shelf_name not in self.store_data:
-            print(" Shelf does not exist.")
-            return
+        try:
+            shelf_name = input("Enter the shelf name: ").strip()
+            if shelf_name not in self.store_data:
+                print(" Shelf does not exist.")
+                return
 
-        percentage = float(input("Enter the percentage increase for sale price: ").strip())
 
-        for product_name, product_data in self.store_data[shelf_name].items():
-            for month, cost_prices in product_data["Cost Price"].items():
-                if cost_prices:
-                    sale_prices = [round(cp * (1 + percentage / 100), 2) for cp in cost_prices]
-                    self.store_data[shelf_name][product_name]["Sale Price"][month] = sale_prices
+            try:
+                percentage = float(input("Enter the percentage increase for sale price: ").strip())
+            except ValueError:
+                print("Invalid percentage entered.")
+                return
 
-        print(f" Sale prices updated for all products in '{shelf_name}'.")
-        print(self.store_data)
+
+            for product_name, product_data in self.store_data[shelf_name].items():
+                for month, cost_prices in product_data["Cost Price"].items():
+                    if cost_prices:
+                        sale_prices = [round(cp * (1 + percentage / 100), 2) for cp in cost_prices]
+                        self.store_data[shelf_name][product_name]["Sale Price"][month] = sale_prices
+
+
+            print(f" Sale prices updated for all products in '{shelf_name}'.")
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def set_category(self):
         """Set or update the category of a product."""
-        shelf_name = input("Enter the shelf name: ").strip()
-        if shelf_name not in self.store_data:
-            print("Shelf does not exist.")
-            return
+        try:
+            shelf_name = input("Enter the shelf name: ").strip()
+            if shelf_name not in self.store_data:
+                print("Shelf does not exist.")
+                return
 
-        product_name = input("Enter the product name: ").strip()
-        if product_name not in self.store_data[shelf_name]:
-            print("Product does not exist.")
-            return
 
-        category = input(f"Enter new category for '{product_name}': ").strip()
-        self.store_data[shelf_name][product_name]["Category"] = category
-        print(f"Category updated to '{category}' for {product_name}.")
-        print(self.store_data)
+            product_name = input("Enter the product name: ").strip()
+            if product_name not in self.store_data[shelf_name]:
+                print("Product does not exist.")
+                return
+
+
+            category = input(f"Enter new category for '{product_name}': ").strip()
+            self.store_data[shelf_name][product_name]["Category"] = category
+            print(f"Category updated to '{category}' for {product_name}.")
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def reset_cost_price(self):
         """Reset cost price with 0 for a given shelf, product, and month."""
-        shelf_name = input("Enter the shelf name: ").strip()
-        if shelf_name not in self.store_data:
-            print("Shelf does not exist.")
-            return
+        try:
+            shelf_name = input("Enter the shelf name: ").strip()
+            if shelf_name not in self.store_data:
+                print("Shelf does not exist.")
+                return
 
-        product_name = input("Enter the product name: ").strip()
-        if product_name not in self.store_data[shelf_name]:
-            print("Product does not exist.")
-            return
 
-        month = input("Enter the month: ").strip().capitalize()
-        if month not in self.store_data[shelf_name][product_name]["Cost Price"]:
-            print("No cost price data for this month.")
-            return
+            product_name = input("Enter the product name: ").strip()
+            if product_name not in self.store_data[shelf_name]:
+                print("Product does not exist.")
+                return
 
-        self.store_data[shelf_name][product_name]["Cost Price"][month] = [0]  # Resetting to zero
-        print(f"Cost prices reset to 0 for '{product_name}' in {month}.")
-        print(self.store_data)
+
+            month = input("Enter the month: ").strip().capitalize()
+            if month not in self.store_data[shelf_name][product_name]["Cost Price"]:
+                print("No cost price data for this month.")
+                return
+
+
+            self.store_data[shelf_name][product_name]["Cost Price"][month] = [0]  # Resetting to zero
+            print(f"Cost prices reset to 0 for '{product_name}' in {month}.")
+            print(self.store_data)
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def get_min_max_price(self):
         """Get the maximum or minimum cost price with the shelf name of a product."""
-        product_name = input("Enter the product name: ").strip()
-        price_type = input("Do you want 'max' or 'min' price? ").strip().lower()
+        try:
+            product_name = input("Enter the product name: ").strip()
+            price_type = input("Do you want 'max' or 'min' price? ").strip().lower()
 
-        if price_type not in ["max", "min"]:
-            print(" Invalid choice. Please enter 'max' or 'min'.")
-            return
 
-        price_func = max if price_type == "max" else min
+            if price_type not in ["max", "min"]:
+                print(" Invalid choice. Please enter 'max' or 'min'.")
+                return
 
-        min_max_price = None
-        shelf_with_price = None
 
-        for shelf, products in self.store_data.items():
-            if product_name in products:
-                for month, prices in products[product_name]["Cost Price"].items():
-                    if prices:  
-                        current_price = price_func(prices)
+            price_func = max if price_type == "max" else min
 
-                        
-                        if min_max_price is None or (price_func([min_max_price, current_price]) == current_price):
-                            min_max_price = current_price
-                            shelf_with_price = shelf
 
-        
-        if min_max_price is not None:
-            print(f" {price_type.capitalize()} price of '{product_name}' is {min_max_price} in '{shelf_with_price}'.")
-        else:
-            print(f" No cost price data found for '{product_name}'.")
+            min_max_price = None
+            shelf_with_price = None
+
+
+            for shelf, products in self.store_data.items():
+                if product_name in products:
+                    for month, prices in products[product_name]["Cost Price"].items():
+                        if prices:  
+                            current_price = price_func(prices)
+
+
+                            if min_max_price is None or (price_func([min_max_price, current_price]) == current_price):
+                                min_max_price = current_price
+                                shelf_with_price = shelf
+
+
+            if min_max_price is not None:
+                print(f" {price_type.capitalize()} price of '{product_name}' is {min_max_price} in '{shelf_with_price}'.")
+            else:
+                print(f" No cost price data found for '{product_name}'.")
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def get_product_average_cost_sale_profit(self):
         """Get the average cost, sale price, and profit for a specific product in a specific month."""
-        product_name = input("Enter the product name: ").strip()
-        total_cost = total_sale = total_profit = count = 0
+        try:
+            product_name = input("Enter the product name: ").strip()
+            total_cost = total_sale = total_profit = count = 0
 
-        for shelf_name, shelf_data in self.store_data.items():
-            if product_name in shelf_data:
-                if month := input("Enter the month: ").strip().capitalize():
-                    if month in shelf_data[product_name]["Cost Price"] and month in shelf_data[product_name][
-                        "Sale Price"]:
+
+            for shelf_name, shelf_data in self.store_data.items():
+                if product_name in shelf_data:
+                    month = input("Enter the month: ").strip().capitalize()
+                    if month in shelf_data[product_name]["Cost Price"] and month in shelf_data[product_name]["Sale Price"]:
                         cost_prices = shelf_data[product_name]["Cost Price"][month]
                         sale_prices = shelf_data[product_name]["Sale Price"][month]
                         count += 1
+
 
                         total_cost += sum(cost_prices)
                         total_sale += sum(sale_prices)
                         total_profit += sum(sale - cost for sale, cost in zip(sale_prices, cost_prices))
 
-        if count > 0:
-            avg_cost = round(total_cost / count, 2)
-            avg_sale = round(total_sale / count, 2)
-            avg_profit = round(total_profit / count, 2)
-            print(f" Average Cost for '{product_name}' in {month}: {avg_cost}")
-            print(f" Average Sale Price for '{product_name}' in {month}: {avg_sale}")
-            print(f" Average Profit for '{product_name}' in {month}: {avg_profit}")
-        else:
-            print(f" No data found for {product_name} in {month}.")
+
+            if count > 0:
+                avg_cost = round(total_cost / count, 2)
+                avg_sale = round(total_sale / count, 2)
+                avg_profit = round(total_profit / count, 2)
+                print(f" Average Cost for '{product_name}' in {month}: {avg_cost}")
+                print(f" Average Sale Price for '{product_name}' in {month}: {avg_sale}")
+                print(f" Average Profit for '{product_name}' in {month}: {avg_profit}")
+            else:
+                print(f" No data found for {product_name} in {month}.")
+        except Exception as e:
+            print(f"Error: {e}")
+
 
     def run(self):
         """Main menu for user interaction."""
-        print("\n Store Management System")
-        print("1. Create Shelf")
-        print("2. Add Product, Set Category & Cost Prices")
-        print("3. Update Sale Price for a Product")
-        print("4. Update sale prices for all products in a shelf by a given percentage.")
-        print("5. Set or update the category of a product.")
-        print("6. Reset cost price with 0 for a given shelf, product, and month.")
-        print("7. Get the maximum or minimum cost price with the shelf name of a product")
-        print("8. get_product_average_cost_sale_profit")
-        print("0. Exit")
+        try:
+            print("\n Store Management System")
+            print("1. Create Shelf")
+            print("2. Add Product, Set Category & Cost Prices")
+            print("3. Update Sale Price for a Product")
+            print("4. Update sale prices for all products in a shelf by a given percentage.")
+            print("5. Set or update the category of a product.")
+            print("6. Reset cost price with 0 for a given shelf, product, and month.")
+            print("7. Get the maximum or minimum cost price with the shelf name of a product")
+            print("8. Get average of product, average of cost, average of sale profit")
+            print("0. Exit")
 
-        choice = input("Enter your choice: ").strip()
 
-        if choice == "1":
-            self.create_shelf()
-        elif choice == "2":
-            self.add_product()
-        elif choice == "3":
-            self.update_sale_price()
-        elif choice == "4":
-            self.update_sale_price_for_shelf()
-        elif choice == "5":
-            self.set_category()
-        elif choice == "6":
-            self.reset_cost_price()
-        elif choice == "7":
-            self.get_min_max_price()
-        elif choice == "0":
-            print("Exiting Store Management System.")
-            return # End recursion
-        else:
-            print("Invalid choice. Please try again.")
+            choice = input("Enter your choice: ").strip()
+
+
+            if choice == "1":
+                self.create_shelf()
+            elif choice == "2":
+                self.add_product()
+            elif choice == "3":
+                self.update_sale_price()
+            elif choice == "4":
+                self.update_sale_price_for_shelf()
+            elif choice == "5":
+                self.set_category()
+            elif choice == "6":
+                self.reset_cost_price()
+            elif choice == "7":
+                self.get_min_max_price()
+            elif choice == "8":
+                self.get_product_average_cost_sale_profit()
+            elif choice == "0":
+                print("Exiting Store Management System.")
+                return  # End recursion
+            else:
+                print("Invalid choice. Please try again.")
+        except Exception as e:
+            print(f"Error in main menu: {e}")
+
 
         # Recursive call to display the menu again
         self.run()
-
 store = Storemanagement_system()
 store.run()
 
