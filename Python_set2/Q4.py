@@ -19,7 +19,6 @@
 #f. Check company has any employee who has less than 2 years of experience.
 #g. Check whether Edge is TL or not if not make him TL.
 
-
 class Employee:
     def __init__(self, name, designation, experience, manager=None, mentor=None):
         self.name = name
@@ -28,16 +27,16 @@ class Employee:
         self.manager = manager
         self.mentor = mentor
 
-
 def validate_string(prompt):
+    """Validates input to ensure it is a non-empty string containing only alphabetic characters."""
     while True:
         value = input(prompt).strip()
         if value.replace(" ", "").isalpha():
             return value
         print("Invalid input. Please enter a valid string containing only alphabets.")
 
-
 def validate_experience():
+    """Validates input to ensure experience is a valid number or 'None'."""
     while True:
         try:
             experience = input("Enter years of experience (or 'None' if not applicable): ").strip()
@@ -51,8 +50,8 @@ def validate_experience():
         except ValueError:
             print("Invalid input. Please enter a valid number or 'None'.")
 
-
 def validate_float(prompt):
+    """Validates input to ensure it is a valid positive floating-point number."""
     while True:
         try:
             value = float(input(prompt).strip())
@@ -63,42 +62,47 @@ def validate_float(prompt):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
-
 def display_employees_by_manager(manager_name, employees):
+    """Displays a list of employees under a given manager."""
     if not employees:
         print("No employees in the system.")
         return
     result = [emp.name for emp in employees if emp.manager == manager_name]
     print(f"Employees under {manager_name}: {', '.join(result) if result else 'None'}")
 
-
 def display_employees_with_experience(employees, min_experience):
+    """Displays a list of employees with more than the given minimum years of experience."""
     if not employees:
         print("No employees in the system.")
         return
     result = [emp.name for emp in employees if emp.experience and emp.experience > min_experience]
     print(f"Employees with more than {min_experience} years of experience: {', '.join(result) if result else 'None'}")
 
-
 def update_experience(employees):
+    """Updates the experience of employees whose experience is between 3.5 and 4.5 years."""
     if not employees:
         print("No employees in the system.")
         return
+    
+    # Get the new experience value from user input
+    new_experience = float(input("Enter the new experience value to update: "))
+
     for emp in employees:
         if emp.experience and 3.5 < emp.experience < 4.5:
-            emp.experience = 4.6
-    print("Experience updated for employees between 3.5 and 4.5 years.")
-
+            emp.experience = new_experience
+    
+    print(f"Experience updated for employees between 3.5 and 4.5 years to {new_experience}.")
 
 def display_tl_with_experience(tls):
+    """Displays the list of team leads and their experience."""
     if not tls:
         print("No team leads in the system.")
         return
     for tl in tls:
         print(f"{tl.name}: {tl.experience if tl.experience else 'N/A'} years")
 
-
 def reassign_manager(old_manager, new_manager, employees):
+    """Reassigns the manager of employees from the old manager to the new manager."""
     if not employees:
         print("No employees in the system.")
         return
@@ -107,16 +111,16 @@ def reassign_manager(old_manager, new_manager, employees):
             emp.manager = new_manager
     print(f"Employees under {old_manager} reassigned to {new_manager}.")
 
-
 def check_low_experience(employees, threshold=2):
+    """Checks if any employee has less than the specified threshold years of experience."""
     if not employees:
         print("No employees in the system.")
         return
     result = any(emp.experience and emp.experience < threshold for emp in employees)
     print(f"Company has employee with less than {threshold} years of experience: {'Yes' if result else 'No'}")
 
-
 def promote_to_tl(name, employees):
+    """Promotes an employee to the role of Team Lead."""
     if not employees:
         print("No employees in the system.")
         return
@@ -130,8 +134,8 @@ def promote_to_tl(name, employees):
             return
     print(f"Employee {name} not found.")
 
-
 def menu():
+    """Displays the main menu and handles user input for various operations."""
     while True:
         print("\nMenu:")
         print("1. Display employees by manager")
@@ -168,7 +172,6 @@ def menu():
         else:
             print("Invalid choice. Please try again.")
 
-
 # User Input for Employee Data
 employees = []
 n = int(input("Enter the number of employees: "))
@@ -181,10 +184,7 @@ for _ in range(n):
     mentor = input("Enter mentor's name (or 'None' if not applicable): ").strip()
     mentor = None if mentor.lower() == 'none' else mentor
     employees.append(Employee(name, designation, experience, manager, mentor))
-    
 menu()
-
-
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 
