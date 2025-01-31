@@ -5,18 +5,15 @@
 #c. The number must be divisible by either 3 or 7.
 
 def extract_integers(numbers):
+    '''Extracts 4-digit integers from a list based on specific conditions.'''
     result = []
     
     for num in numbers:
-        
         if 1000 <= num <= 9999:
-            
             first_digit = (num // 1000) % 10
-            
             last_digit = num % 10 
-            
+            '''Check if the first digit is odd, last digit is even, and the number is divisible by 3 or 7.'''
             if first_digit % 2 != 0 and last_digit % 2 == 0:
-            
                 if num % 3 == 0 or num % 7 == 0:
                     result.append(num)
     return result

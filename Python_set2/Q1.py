@@ -4,16 +4,15 @@
 #For example: WORD1 # WORD2 # WORD3
 
 def extract_repeated_words(sentence):
+    '''Extracts and returns repeated words from a sentence.'''
     words = sentence.lower().split()  # Convert sentence to lowercase
     word_counts = {}
     repeated_words = set()
-
 
     for word in words:
         word_counts[word] = word_counts.get(word, 0) + 1
         if word_counts[word] == 2:  # Add to set when it appears the second time
             repeated_words.add(word)
-
 
     return ' # '.join(repeated_words)
 
@@ -23,8 +22,6 @@ if result:
     print("Repeated words are:", result)
 else:
     print("No repeated words found.")
-
-
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 

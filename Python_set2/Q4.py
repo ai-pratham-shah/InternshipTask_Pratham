@@ -79,19 +79,51 @@ def display_employees_with_experience(employees, min_experience):
     print(f"Employees with more than {min_experience} years of experience: {', '.join(result) if result else 'None'}")
 
 def update_experience(employees):
-    """Updates the experience of employees whose experience is between 3.5 and 4.5 years."""
+    """Updates the experience of employees based on a user-defined range of experience years."""
     if not employees:
         print("No employees in the system.")
         return
-    
-    # Get the new experience value from user input
-    new_experience = float(input("Enter the new experience value to update: "))
 
+    while True:
+        try:
+            min_experience = float(input("Enter the minimum experience value (in years): "))
+            if min_experience <= 0:
+                print("Experience must be a positive value. Please try again.")
+                continue
+            max_experience = float(input("Enter the maximum experience value (in years): "))
+            if max_experience <= 0:
+                print("Experience must be a positive value. Please try again.")
+                continue
+        except ValueError:
+            print("Invalid input. Please enter numeric values for experience.")
+            continue
+
+        if min_experience >= max_experience:
+            print("Minimum experience must be less than maximum experience. Please try again.")
+        else:
+            break  
+
+    # Get the new experience value from user input
+    while True:
+        try:
+            new_experience = float(input("Enter the new experience value to update: "))
+            if new_experience <= 0:
+                print("Experience must be a positive value. Please try again.")
+                continue
+            break  # Break the loop if input is valid
+        except ValueError:
+            print("Invalid input. Please enter a numeric value for the new experience.")
+
+    # Update experience for employees within the specified range
+    updated = False
     for emp in employees:
-        if emp.experience and 3.5 < emp.experience < 4.5:
+        if emp.experience and min_experience < emp.experience < max_experience:
             emp.experience = new_experience
-    
-    print(f"Experience updated for employees between 3.5 and 4.5 years to {new_experience}.")
+            updated = True
+    if updated:
+        print(f"Experience updated for employees with experience between {min_experience} and {max_experience} years to {new_experience}.")
+    else:
+        print(f"No employees found with experience between {min_experience} and {max_experience} years.")
 
 def display_tl_with_experience(tls):
     """Displays the list of team leads and their experience."""
@@ -168,6 +200,7 @@ def menu():
             name = validate_string("Enter employee name to promote to TL: ")
             promote_to_tl(name, employees)
         elif choice == "8":
+            print("Thankyou!!")       
             break
         else:
             print("Invalid choice. Please try again.")

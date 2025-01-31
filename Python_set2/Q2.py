@@ -4,8 +4,9 @@
 #b. The string must not contain any number.
 
 def extract_string(input_list):
+    '''Extracts valid strings from a list based on specific criteria.'''
     def is_valid_string(s):
-        # Check if the string starts with a capital letter and is not a vowel
+        '''Checks if a string meets the validity criteria.'''
         if s[0].isupper() and s[0] not in 'AEIOU':
             # Check if the string is alphabetic
             if s.isalpha():
@@ -15,20 +16,16 @@ def extract_string(input_list):
     return [s for s in input_list if is_valid_string(s)]
 
 user_input = input("Enter a list of items (comma-separated): ")
-
 if not user_input.strip():
     print("Input is not valid. Please enter a list of items.")
 else:
     input_list = user_input.split(',')
     input_list = [item.strip() for item in input_list]
-
     result = extract_string(input_list)
-    
     if result:
         print("Valid strings found:", result)
     else:
         print("No valid strings found. Please check your input.")
-
 
 # ------------------------------STEPS/PSUEDOCODE------------------------------
 
